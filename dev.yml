@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  express:
+    build:
+      context: .
+      dockerfile: ./compose/dev/express/Dockerfile
+    image: dev_express
+    env_file:
+      - .env.dev
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+    command: yarn dev
+
+  db:
+    image: postgres
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env.dev
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  dbdata:

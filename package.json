@@ -8,7 +8,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "DEBUG=library-management-system:* nodemon ./bin/www",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "debug": "~2.6.9",

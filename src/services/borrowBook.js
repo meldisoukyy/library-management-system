@@ -3,10 +3,10 @@ const { Borrower, Book, BorrowerBook } = require('../models');
 const ApiError = require('../utils/ApiError');
 const { Op } = require('sequelize');
 
-const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
+const checkoutBook = async (borrowerID, bookID, borrowDate, dueDate) => {
 	const borrower = await Borrower.findOne({
 		where: {
-			uuid: borrowerUUID,
+			id: borrowerID,
 		},
 	});
 	if (!borrower) {
@@ -15,7 +15,7 @@ const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
 
 	const book = await Book.findOne({
 		where: {
-			uuid: bookUUID,
+			id: bookID,
 		},
 	});
 	if (!book) {
@@ -28,8 +28,8 @@ const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
 	const borrowerBook = await BorrowerBook.findOne({
 		where: {
 			[Op.and]: [
-				{ borrowerId: borrowerUUID },
-				{ bookId: bookUUID },
+				{ borrowerID: borrowerID },
+				{ bookID: bookID },
 				{ returnDate: null },
 			],
 		},
@@ -39,9 +39,9 @@ const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
 	}
 
 	const newBorrowerBook = await BorrowerBook.create({
-		borrowerId: borrowerUUID,
-		bookId: bookUUID,
-		borrowedDate,
+		borrowerID,
+		bookID,
+		borrowDate,
 		dueDate,
 	});
 
@@ -52,10 +52,10 @@ const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
 	return newBorrowerBook;
 };
 
-const returnBook = async (borrowerUUID, bookUUID, returnDate) => {
+const returnBook = async (borrowerID, bookID, returnDate) => {
 	const borrower = await Borrower.findOne({
 		where: {
-			uuid: borrowerUUID,
+			id: borrowerID,
 		},
 	});
 	if (!borrower) {
@@ -64,7 +64,7 @@ const returnBook = async (borrowerUUID, bookUUID, returnDate) => {
 
 	const book = await Book.findOne({
 		where: {
-			uuid: bookUUID,
+			id: bookID,
 		},
 	});
 	if (!book) {
@@ -74,11 +74,13 @@ const returnBook = async (borrowerUUID, bookUUID, returnDate) => {
 	const borrowerBook = await BorrowerBook.findOne({
 		where: {
 			[Op.and]: [
-				{ borrowerId: borrowerUUID },
-				{ bookId: bookUUID },
+				{ borrowerID: borrowerID },
+				{ bookID: bookID },
 				{ returnDate: null },
 			],
 		},
+		limit,
+		offset,
 	});
 	if (!borrowerBook) {
 		throw new ApiError(httpStatus.BAD_REQUEST, 'Book is not borrowed');
@@ -95,41 +97,28 @@ const returnBook = async (borrowerUUID, bookUUID, returnDate) => {
 	return borrowerBook;
 };
 
-const getBorrowerCurrentBooks = async (borrowerUUID, offset, limit) => {
+const getBorrowerCurrentBooks = async (borrowerID, offset, limit) => {
 	const borrower = await Borrower.findOne({
 		where: {
-			uuid: borrowerUUID,
+			id: borrowerID,
 		},
 	});
 	if (!borrower) {
 		throw new ApiError(httpStatus.NOT_FOUND, 'Borrower not found');
 	}
 
-    const { count, rows } = await Book.findAndCountAll({
-        include: [
-            {
-                model: Borrower,
-                as: 'borrowers',
-                where: {
-                    uuid: borrowerUUID,
-                },
-                through: {
-                    model: BorrowerBook,
-                    as: 'borrowerBooks',
-                    where: {
-                        returnDate: null,
-                    },
-                },
-            },
-        ],
-        offset,
+	const { count, rows } = await BorrowerBook.findAndCountAll({
+		where: {
+			[Op.and]: [{ borrowerID: borrowerID }, { returnDate: null }],
+		},
         limit,
-    });
+        offset
+	});
 
-    return {
-        results: rows,
-        total: count,
-    }
+	return {
+		results: rows,
+		total: count,
+	};
 };
 
 const getOverdueBooks = async (offset, limit) => {
@@ -140,16 +129,6 @@ const getOverdueBooks = async (offset, limit) => {
 				{ dueDate: { [Op.lt]: new Date() } },
 			],
 		},
-		include: [
-			{
-				model: Book,
-				as: 'book',
-			},
-			{
-				model: Borrower,
-				as: 'borrower',
-			},
-		],
 		offset,
 		limit,
 	});

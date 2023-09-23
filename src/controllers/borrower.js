@@ -21,8 +21,8 @@ const getAllBorrowers = catchAsync(async (req, res) => {
 });
 
 const getBorrower = catchAsync(async (req, res) => {
-	const { uuid } = req.params;
-	const borrower = await borrowerService.getBorrower(uuid);
+	const { id } = req.params;
+	const borrower = await borrowerService.getBorrower(id);
 	res.status(httpStatus.OK).send(borrower);
 });
 
@@ -37,14 +37,14 @@ const registerBorrower = catchAsync(async (req, res) => {
 });
 
 const updateBorrower = catchAsync(async (req, res) => {
-	const { uuid } = req.params;
-	const borrower = await borrowerService.updateBorrower(uuid, req.body);
+	const { id } = req.params;
+	const borrower = await borrowerService.updateBorrower(id, req.body);
 	res.status(httpStatus.OK).send(borrower);
 });
 
 const deleteBorrower = catchAsync(async (req, res) => {
-	const { uuid } = req.params;
-	await borrowerService.deleteBorrower(uuid);
+	const { id } = req.params;
+	await borrowerService.deleteBorrower(id);
 	res.status(httpStatus.NO_CONTENT).send();
 });
 

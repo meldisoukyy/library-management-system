@@ -7,17 +7,17 @@ module.exports = (sequelize, DataTypes) => {
 			models.Borrower.belongsToMany(models.Book, {
 				as: 'books',
 				through: 'BorrowerBook',
-				foreignKey: 'borrowerId',
-				otherKey: 'bookId',
+				foreignKey: 'borrowerID',
+				otherKey: 'bookID',
 			});
 			models.Borrower.hasMany(models.BorrowerBook, {
 				as: 'borrowerBooks',
-				foreignKey: 'borrowerId',
+				foreignKey: 'borrowerID',
 			});
 		}
 
 		toJSON() {
-			return { ...this.get(), id: undefined, password: undefined };
+			return { ...this.get(), password: undefined };
 		}
 
 		isPasswordMatch(password) {
@@ -26,12 +26,6 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Borrower.init(
 		{
-			uuid: {
-				type: DataTypes.UUID,
-				allowNull: false,
-				unique: true,
-				defaultValue: DataTypes.UUIDV4,
-			},
 			name: {
 				type: DataTypes.STRING,
 				allowNull: false,

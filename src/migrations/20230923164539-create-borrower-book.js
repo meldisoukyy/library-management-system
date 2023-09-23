@@ -9,23 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      bookId: {
-        type: Sequelize.UUID,
+      bookID: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Books',
-          key: 'uuid'
+          key: 'id'
         }
       },
-      borrowerId: {
-        type: Sequelize.UUID,
+      borrowerID: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Borrowers',
-          key: 'uuid'
+          key: 'id'
         }
       },
-      borrowedDate: {
+      borrowDate: {
         type: Sequelize.DATE,
         allowNull: false,
       },

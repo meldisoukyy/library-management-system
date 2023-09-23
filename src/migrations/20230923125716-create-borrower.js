@@ -9,12 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      uuid: {
-        type: Sequelize.UUID,
-        allowNull: false,
-        unique: true,
-        defaultValue: Sequelize.UUIDV4
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false

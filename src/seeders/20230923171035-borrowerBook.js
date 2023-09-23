@@ -6,18 +6,18 @@ const book = require('../models/book');
 const borrowBooksData = [];
 const numberOfBorrowedBooks = 20; // Change this to the number of fake borrowed books you want to generate
 
-let bookUUIDs = [];
-let borrowerUUIDs = [];
+let bookIDs = [];
+let borrowerIDs = [];
 (async () => {
-  bookUUIDs = await Book.findAll().then((books) => books.map((book) => book.uuid));
-  borrowerUUIDs = await Borrower.findAll().then((borrowers) => borrowers.map((borrower) => borrower.uuid));
+  bookIDs = await Book.findAll().then((books) => books.map((book) => book.id));
+  borrowerDs = await Borrower.findAll().then((borrowers) => borrowers.map((borrower) => borrower.id));
 })();
 
 for (let i = 0; i < numberOfBorrowedBooks; i++) {
 	borrowBooksData.push({
-		bookId: faker.random.arrayElement(bookUUIDs),
-		borrowerId: faker.random.arrayElement(borrowerUUIDs),
-		borrowedDate: faker.date.past(),
+		bookID: faker.random.arrayElement(bookIDs),
+		borrowerID: faker.random.arrayElement(borrowerIDs),
+		borrowDate: faker.date.past(),
 		dueDate: faker.date.future(),
 		returnDate: faker.datatype.boolean() ? null : faker.date.past(),
 		createdAt: new Date(),

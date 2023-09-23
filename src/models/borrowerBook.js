@@ -11,31 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.BorrowerBook.belongsTo(models.Borrower, {
-        foreignKey: 'borrowerId',
+        foreignKey: 'borrowerID',
         as: 'borrower'
       });
       models.BorrowerBook.belongsTo(models.Book, {
-        foreignKey: 'bookId',
+        foreignKey: 'bookID',
         as: 'book'
       });
     }
   }
   BorrowerBook.init({
-    bookId: {
-      type: DataTypes.UUID,
+    bookID: {
+      type: DataTypes.INTEGER,
       references: {
         model: 'Book',
-        key: 'uuid'
+        key: 'id'
       }
     },
-    borrowerId: {
-      type: DataTypes.UUID,
+    borrowerID: {
+      type: DataTypes.INTEGER,
       references: {
         model: 'Borrower',
-        key: 'uuid'
+        key: 'id'
       }
     },
-    borrowedDate: DataTypes.DATE,
+    borrowDate: DataTypes.DATE,
     dueDate: DataTypes.DATE,
     returnDate: DataTypes.DATE
   }, {

@@ -10,7 +10,9 @@
     "start": "node ./bin/www",
     "dev": "DEBUG=library-management-system:* nodemon ./bin/www",
     "docker:dev": "docker-compose -f dev.yml up",
-    "docker:dev:build": "docker-compose -f dev.yml up --build"
+    "docker:migrate:undo": "docker-compose -f dev.yml run --rm express npx sequelize db:migrate:undo:all --config ./src/config/db.js --migrations-path ./src/migrations/",
+    "docker:migrate": "docker-compose -f dev.yml run --rm express npx sequelize db:migrate --config ./src/config/db.js --migrations-path ./src/migrations/",
+    "docker:seed": "docker-compose -f dev.yml run --rm express npx sequelize db:seed:all --config ./src/config/db.js --seeders-path ./src/seeders/"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

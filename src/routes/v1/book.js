@@ -9,7 +9,7 @@ router
 	.post(bookController.createBook);
 
 router
-	.route('/:uuid')
+	.route('/:id')
 	.get(bookController.getBook)
 	.put(bookController.updateBook)
 	.delete(bookController.deleteBook);

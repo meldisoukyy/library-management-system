@@ -16,8 +16,8 @@ const createBook = async (bookBody) => {
 	return book;
 };
 
-const updateBook = async (bookUUID, updateBody) => {
-	const book = await Book.findOne({ where: { uuid: bookUUID } });
+const updateBook = async (bookID, updateBody) => {
+	const book = await Book.findOne({ where: { id: bookID } });
 	if (!book) {
 		throw new ApiError(httpStatus.NOT_FOUND, 'Book not found');
 	}
@@ -27,16 +27,16 @@ const updateBook = async (bookUUID, updateBody) => {
 	return book;
 };
 
-const getBook = async (bookUUID) => {
-	const book = await Book.findOne({ where: { uuid: bookUUID } });
+const getBook = async (bookID) => {
+	const book = await Book.findOne({ where: { id: bookID } });
 	if (!book) {
 		throw new ApiError(httpStatus.NOT_FOUND, 'Book not found');
 	}
 	return book;
 };
 
-const deleteBook = async (bookUUID) => {
-	const book = await Book.findOne({ where: { uuid: bookUUID } });
+const deleteBook = async (bookID) => {
+	const book = await Book.findOne({ where: { id: bookID } });
 	if (!book) {
 		throw new ApiError(httpStatus.NOT_FOUND, 'Book not found');
 	}

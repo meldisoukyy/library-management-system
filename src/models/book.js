@@ -8,30 +8,23 @@ module.exports = (sequelize, DataTypes) => {
 			models.Book.belongsToMany(models.Borrower, {
 				as: 'borrowers',
 				through: 'BorrowerBook',
-				foreignKey: 'bookId',
-				otherKey: 'borrowerId',
+				foreignKey: 'bookID',
+				otherKey: 'borrowerID',
 			});
 			models.Book.hasMany(models.BorrowerBook, {
 				as: 'borrowerBooks',
-				foreignKey: 'bookId',
+				foreignKey: 'bookID',
 			});
 		}
 
 		toJSON() {
 			return {
 				...this.get(),
-				id: undefined,
 			};
 		}
 	}
 	Book.init(
 		{
-			uuid: {
-				type: DataTypes.UUID,
-				allowNull: false,
-				unique: true,
-				defaultValue: DataTypes.UUIDV4,
-			},
 			title: {
 				type: DataTypes.STRING,
 				allowNull: false,

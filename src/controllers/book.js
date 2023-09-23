@@ -23,20 +23,20 @@ const createBook = catchAsync(async (req, res) => {
 });
 
 const updateBook = catchAsync(async (req, res) => {
-  const bookUUID = req.params.uuid;
-  const book = await bookService.updateBook(bookUUID, req.body);
+  const bookID = req.params.id;
+  const book = await bookService.updateBook(bookID, req.body);
   res.status(httpStatus.OK).send(book);
 });
 
 const getBook = catchAsync(async (req, res) => {
-  const bookUUID = req.params.uuid;
-  const book = await bookService.getBook(bookUUID);
+  const bookID = req.params.id;
+  const book = await bookService.getBook(bookID);
   res.status(httpStatus.OK).send(book);
 });
 
 const deleteBook = catchAsync(async (req, res) => {
-  const bookUUID = req.params.uuid;
-  await bookService.deleteBook(bookUUID);
+  const bookID = req.params.id;
+  await bookService.deleteBook(bookID);
   res.status(httpStatus.NO_CONTENT).send();
 });
 

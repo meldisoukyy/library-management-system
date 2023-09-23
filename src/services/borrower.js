@@ -11,10 +11,10 @@ const getAllBorrowers = async (offset, limit) => {
 	return { count, borrowers: rows};
 };
 
-const getBorrower = async (uuid) => {
+const getBorrower = async (id) => {
 	const borrower = await Borrower.findOne({
 		where: {
-			uuid,
+			id,
 		},
 	});
 	if (!borrower) {
@@ -28,15 +28,15 @@ const createBorrower = async (name, email, password) => {
 	return borrower;
 };
 
-const updateBorrower = async (uuid, updateBody) => {
-	const borrower = await getBorrower(uuid);
+const updateBorrower = async (id, updateBody) => {
+	const borrower = await getBorrower(id);
 	Object.assign(borrower, updateBody);
 	await borrower.save();
 	return borrower;
 };
 
-const deleteBorrower = async (uuid) => {
-	const borrower = await getBorrower(uuid);
+const deleteBorrower = async (id) => {
+	const borrower = await getBorrower(id);
 	await borrower.destroy();
 	return borrower;
 };

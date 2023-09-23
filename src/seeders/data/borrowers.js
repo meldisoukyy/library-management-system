@@ -8,7 +8,6 @@ module.exports = (seed) => {
 
 	for (let i = 0; i < seed; i++) {
 		borrowersData.push({
-			uuid: faker.datatype.uuid(),
 			name: faker.name.findName(),
 			email: faker.internet.email(),
 			password: faker.internet.password(),

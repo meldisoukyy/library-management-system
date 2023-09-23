@@ -7,7 +7,6 @@ module.exports = (seed) => {
 	const booksData = [];
 	for (let i = 0; i < seed; i++) {
 		booksData.push({
-			uuid: faker.datatype.uuid(),
 			title: faker.lorem.words(),
 			author: faker.name.findName(),
 			isbn: faker.datatype.uuid(),

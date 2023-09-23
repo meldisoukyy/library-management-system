@@ -8,4 +8,8 @@ router
 	.route('/checkout')
     .post(borrowBookController.checkoutBook);
 
+router
+    .route('/return')
+    .post(borrowBookController.returnBook);
+
 module.exports = router;

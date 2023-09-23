@@ -14,15 +14,30 @@ const checkoutBook = catchAsync(async (req, res) => {
 		throw new ApiError(httpStatus.BAD_REQUEST, 'Missing required fields');
 	}
 
-	const borrower = await borrowBookService.checkoutBook(
+	const borrowBook = await borrowBookService.checkoutBook(
 		borrowerUUID,
 		bookUUID,
-        borrowedDate || new Date(),
+		borrowedDate || new Date(),
 		dueDate
 	);
-	res.status(httpStatus.OK).send(borrower);
+	res.status(httpStatus.OK).send(borrowBook);
+});
+
+const returnBook = catchAsync(async (req, res) => {
+	const { borrowerUUID, bookUUID, returnDate } = req.body;
+	if (!borrowerUUID || !bookUUID) {
+		throw new ApiError(httpStatus.BAD_REQUEST, 'Missing required fields');
+	}
+
+	const borrowBook = await borrowBookService.returnBook(
+		borrowerUUID,
+		bookUUID,
+		returnDate || new Date()
+	);
+	res.status(httpStatus.OK).send(borrowBook);
 });
 
 module.exports = {
 	checkoutBook,
+	returnBook,
 };

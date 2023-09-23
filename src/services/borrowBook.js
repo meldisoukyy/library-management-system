@@ -52,6 +52,50 @@ const checkoutBook = async (borrowerUUID, bookUUID, borrowedDate, dueDate) => {
     return newBorrowerBook;
 };
 
+const returnBook = async (borrowerUUID, bookUUID, returnDate) => {
+    const borrower = await Borrower.findOne({
+        where: {
+            uuid: borrowerUUID,
+        },
+    });
+    if (!borrower) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Borrower not found');
+    }
+
+    const book = await Book.findOne({
+        where: {
+            uuid: bookUUID,
+        },
+    });
+    if (!book) {
+        throw new ApiError(httpStatus.NOT_FOUND, 'Book not found');
+    }
+
+    const borrowerBook = await BorrowerBook.findOne({
+        where: {
+            [Op.and]: [
+                { borrowerId: borrowerUUID },
+                { bookId: bookUUID },
+                { returnDate: null },
+            ],
+        },
+    });
+    if (!borrowerBook) {
+        throw new ApiError(httpStatus.BAD_REQUEST, 'Book is not borrowed');
+    }
+
+    await borrowerBook.update({
+        returnDate,
+    });
+
+    await book.update({
+        quantity: book.quantity + 1,
+    });
+
+    return borrowerBook;
+};
+
 module.exports = {
     checkoutBook,
+    returnBook,
 }

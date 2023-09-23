@@ -10,7 +10,9 @@
     "start": "node ./bin/www",
     "dev": "DEBUG=library-management-system:* nodemon ./bin/www",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "docker:dev": "docker-compose -f dev.yml up",
+    "dev:db:migrate": "docker-compose -f dev.yml run --rm express yarn run sequelize db:migrate"
   },
   "dependencies": {
     "debug": "~2.6.9",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "eslint": "^8.49.0",
+    "eslint-config-standard": "^17.1.0",
     "nodemon": "^3.0.1",
     "sequelize-cli": "^6.6.1"
   }

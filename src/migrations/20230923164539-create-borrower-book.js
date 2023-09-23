@@ -11,6 +11,7 @@ module.exports = {
       },
       bookId: {
         type: Sequelize.UUID,
+        allowNull: false,
         references: {
           model: 'Books',
           key: 'uuid'
@@ -18,6 +19,7 @@ module.exports = {
       },
       borrowerId: {
         type: Sequelize.UUID,
+        allowNull: false,
         references: {
           model: 'Borrowers',
           key: 'uuid'

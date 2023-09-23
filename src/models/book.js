@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 			models.Book.belongsToMany(models.Borrower, {
 				as: 'borrowers',
 				through: 'BorrowerBook',
+				foreignKey: 'bookId',
+				otherKey: 'borrowerId',
 			});
 		}
 

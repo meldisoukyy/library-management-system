@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
 			models.Borrower.belongsToMany(models.Book, {
 				as: 'books',
 				through: 'BorrowerBook',
+				foreignKey: 'borrowerId',
+				otherKey: 'bookId',
 			});
 		}
 

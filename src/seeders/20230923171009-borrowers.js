@@ -1,19 +1,5 @@
 'use strict';
-const faker = require('faker');
-
-const borrowersData = [];
-const numberOfBorrowers = 5; // Change this to the number of fake borrowers you want to generate
-
-for (let i = 0; i < numberOfBorrowers; i++) {
-	borrowersData.push({
-    uuid: faker.datatype.uuid(),
-		name: faker.name.findName(),
-		email: faker.internet.email(),
-		password: faker.internet.password(),
-		registeredDate: faker.date.past(),
-		updatedAt: new Date(),
-	});
-}
+const borrowersData = require('./data/borrowers')(10);
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

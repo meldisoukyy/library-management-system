@@ -9,22 +9,21 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "DEBUG=library-management-system:* nodemon ./bin/www",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "docker:dev": "docker-compose -f dev.yml up",
-    "dev:db:migrate": "docker-compose -f dev.yml run --rm express yarn run sequelize db:migrate"
+    "docker:dev:build": "docker-compose -f dev.yml up --build"
   },
   "dependencies": {
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.18.2",
+    "http-status": "^1.7.0",
     "morgan": "~1.9.1",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.33.0"
+    "sequelize": "^6.33.0",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
-    "eslint": "^8.49.0",
-    "eslint-config-standard": "^17.1.0",
+    "faker": "^5.5.3",
     "nodemon": "^3.0.1",
     "sequelize-cli": "^6.6.1"
   }

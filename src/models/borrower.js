@@ -4,7 +4,16 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
 	class Borrower extends Model {
 		static associate(models) {
-			// define association here
+			models.Borrower.belongsToMany(models.Book, {
+				as: 'books',
+				through: 'BorrowerBook',
+				foreignKey: 'borrowerId',
+				otherKey: 'bookId',
+			});
+			models.Borrower.hasMany(models.BorrowerBook, {
+				as: 'borrowerBooks',
+				foreignKey: 'borrowerId',
+			});
 		}
 
 		toJSON() {

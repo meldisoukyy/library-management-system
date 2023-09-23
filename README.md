@@ -135,3 +135,7 @@ This section provides a list of all the endpoints available in the API along wit
 
 - **Endpoint:** `GET /borrow/overdue`
 - **Description:** Retrieve a list of books that are overdue.
+
+## Database Schema
+
+![Database Schema](./docs/dbdigram.png)

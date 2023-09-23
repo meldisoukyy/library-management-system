@@ -4,8 +4,16 @@ const bookController = require('../../controllers/book');
 const router = express.Router();
 
 router
-	.route('/')
-	.get(bookController.getAllBooks)
-	.post(bookController.createBook)
+  .route('/')
+  .get(bookController.getAllBooks)
+  .post(bookController.createBook);
+
+router
+  .route('/:uuid')
+  .get(bookController.getBook)
+  .put(bookController.updateBook)
+  .delete(bookController.deleteBook);
+
+router.route('/search').get(bookController.searchBooks);
 
 module.exports = router;

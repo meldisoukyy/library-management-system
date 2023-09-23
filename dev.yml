@@ -14,7 +14,7 @@ services:
       - db
     volumes:
       - .:/usr/src/app
-    command: yarn dev
+    command: yarn dev -L
 
   db:
     image: postgres

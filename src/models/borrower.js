@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'borrowerId',
 				otherKey: 'bookId',
 			});
+			models.Borrower.hasMany(models.BorrowerBook, {
+				as: 'borrowerBooks',
+				foreignKey: 'borrowerId',
+			});
 		}
 
 		toJSON() {

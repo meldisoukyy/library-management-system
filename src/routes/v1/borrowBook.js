@@ -12,4 +12,12 @@ router
     .route('/return')
     .post(borrowBookController.returnBook);
 
+router
+    .route('/current')
+    .get(borrowBookController.getBorrowerCurrentBooks);
+
+router
+    .route('/overdue')
+    .get(borrowBookController.getOverdueBooks);
+
 module.exports = router;

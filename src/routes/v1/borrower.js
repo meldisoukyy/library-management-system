@@ -9,7 +9,7 @@ router
 	.get(borrowerController.getAllBorrowers);
 
 router
-	.route('/:uuid')
+	.route('/:id')
 	.get(borrowerController.getBorrower)
 	.put(borrowerController.updateBorrower)
 	.delete(borrowerController.deleteBorrower);

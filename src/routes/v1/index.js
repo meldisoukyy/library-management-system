@@ -1,5 +1,6 @@
 const express = require('express');
 const bookRoute = require('./book');
+const borrowerRoute = require('./borrower');
 
 const router = express.Router();
 
@@ -7,6 +8,10 @@ const defaultRoutes = [
   {
     path: '/books',
     route: bookRoute
+  },
+  {
+    path: '/borrowers',
+    route: borrowerRoute
   }
 ];
 
